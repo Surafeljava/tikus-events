@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tikusevents/wrapper.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,30 +14,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: Wrapper(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Tikus Events', style: TextStyle(color: Colors.grey[800], letterSpacing: 1.0),),
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.grey[800]),
-      ),
-      body: Center(
-        child: Text('Tikus Events!'),
-      ),
-    );
-  }
-}
