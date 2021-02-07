@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # tikus-events
 
 Event posting and registering app
