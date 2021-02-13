@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tikusevents/Presentation/wrapper.dart';
+import 'wrapper.dart';
 
 void main() {
   runApp(MyApp());
