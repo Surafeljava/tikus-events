@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tikusevents/auth/repository/auth_repository.dart';
 import 'wrapper.dart';
 
 void main() {
@@ -6,15 +7,18 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+
+  final AuthRepository authRepo = new AuthRepository();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Tikus Events',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Wrapper(),
+      home: Wrapper(authRepository: authRepo,),
     );
   }
 }

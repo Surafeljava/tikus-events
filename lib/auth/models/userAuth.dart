@@ -26,3 +26,23 @@ class UserAuth extends Equatable {
   @override
   String toString() => 'userAuth { user_id: $userId, user_name: $userName, email: $email }';
 }
+
+@immutable
+class UserToken extends Equatable {
+
+  final String token;
+
+  UserToken({this.token});
+
+  @override
+  List<Object> get props => [token];
+
+  factory UserToken.fromJson(Map<String, dynamic> json) {
+    return UserToken(
+      token: json['token'],
+    );
+  }
+
+  @override
+  String toString() => 'userAuth { user_id: $token }';
+}
