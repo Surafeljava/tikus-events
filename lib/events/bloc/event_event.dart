@@ -23,3 +23,16 @@ class EventCreate extends EventEvent {
   @override
   String toString() => 'Event Created {event: $event}';
 }
+
+
+class EventUpdate extends EventEvent {
+  final Event event;
+
+  const EventUpdate(this.event);
+
+  @override
+  List<Object> get props => [event];
+
+  @override
+  String toString() => 'Event Updated {event: $event}';
+}
