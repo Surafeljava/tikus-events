@@ -10,3 +10,16 @@ class EventInitialize extends EventEvent{
   List<Object> get props => [];
 
 }
+
+
+class EventCreate extends EventEvent {
+  final Event event;
+
+  const EventCreate(this.event);
+
+  @override
+  List<Object> get props => [event];
+
+  @override
+  String toString() => 'Event Created {event: $event}';
+}
