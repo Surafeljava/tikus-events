@@ -44,5 +44,14 @@ class EventBloc extends Bloc<EventEvent, EventState>{
       }
     }
 
+    if (event is EventDelete) {
+      try {
+        await eventRepository.deleteEvent(event.event.event_id);
+        final events = await eventRepository.getEvents();
+        yield EventLoadSuccess(events);
+      } catch (_) {
+        yield EventOperationFailure();
+      }
+    }
   }
 }
