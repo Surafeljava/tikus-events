@@ -20,3 +20,5 @@ class EventLoadSuccess extends EventState {
   @override
   List<Object> get props => [events];
 }
+
+class EventOperationFailure extends EventState {}
