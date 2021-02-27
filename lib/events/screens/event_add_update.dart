@@ -5,10 +5,10 @@ class UpdateEvent extends StatefulWidget {
 
   UpdateEvent({this.args});
   @override
-  _AddUpdateCourseState createState() => _AddUpdateCourseState();
+  _AddUpdateEventState createState() => _AddUpdateEventState();
 }
 
-class _AddUpdateCourseState extends State<UpdateEvent> {
+class _AddUpdateEventState extends State<UpdateEvent> {
   final _formKey = GlobalKey<FormState>();
 
   final Map<String, dynamic> _event = {};
@@ -17,7 +17,7 @@ class _AddUpdateCourseState extends State<UpdateEvent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.args.edit ? "Edit Course" : "Add New Course"}'),
+        title: Text('${widget.args.edit ? "Edit Event" : "Add New Event"}'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
