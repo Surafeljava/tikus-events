@@ -1,60 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tikusevents/auth/bloc/auth_bloc.dart';
-import 'package:tikusevents/auth/bloc/auth_state.dart';
-import 'package:tikusevents/auth/screens/forgot_password.dart';
-import 'package:tikusevents/auth/screens/login.dart';
-import 'package:tikusevents/home/home.dart';
-import 'package:tikusevents/splash/splashPage.dart';
+import 'package:tikusevents/app_route.dart';
 
-import 'auth/bloc/auth_event.dart';
-import 'auth/repository/auth_repository.dart';
+import 'authenticate/bloc/bloc.dart';
+import 'authenticate/repository/auth_repository.dart';
 
-class Wrapper extends StatefulWidget {
+class Wrapper extends StatelessWidget {
 
   final AuthRepository authRepository;
 
-  Wrapper({Key key, @required this.authRepository}) : super(key: key);
-
-  @override
-  _WrapperState createState() => _WrapperState();
-}
-
-class _WrapperState extends State<Wrapper> {
-  AuthenticationBloc authenticationBloc;
-  AuthRepository get authRepository => widget.authRepository;
-
-  @override
-  void initState() {
-    authenticationBloc = AuthenticationBloc(authRepository: authRepository);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    authenticationBloc.close();
-    super.dispose();
-  }
+  Wrapper({@required this.authRepository}) : assert(authRepository != null);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => authenticationBloc,
-      child: BlocBuilder<AuthenticationBloc, AuthState>(builder: (context, state){
-        if(state is AuthenticationUninitialized){
-          return SplashPage(authenticationBloc: authenticationBloc,);
-        }else if(state is AuthenticationAuthenticated){
-          return HomePage();
-        }else if(state is AuthenticationUnauthenticated){
-          return LoginPage(authRepository: authRepository);
-        }else if(state is AuthenticationLoading){
-          return Scaffold(
-            body: Center(child: Text('Loading'),),
-          );
-        }else{
-          return HomePage();
-        }
-      },
+    return RepositoryProvider.value(
+      value: this.authRepository,
+      child: BlocProvider(
+        create: (context) => AuthBloc(authRepository: this.authRepository)..add(AuthLoad()),
+        child: MaterialApp(
+          title: 'Tikus Events',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          onGenerateRoute: AppRoute.generateRoute,
+        ),
       ),
     );
   }

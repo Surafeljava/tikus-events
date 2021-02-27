@@ -1,25 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:tikusevents/auth/repository/auth_repository.dart';
+import 'package:tikusevents/authenticate/data_provider/auth_data_provider.dart';
+import 'authenticate/repository/auth_repository.dart';
 import 'wrapper.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(MyApp());
-}
 
-class MyApp extends StatelessWidget {
+  final AuthRepository authRepository = AuthRepository(
+    dataProvider: AuthDataProvider(
+      httpClient: http.Client(),
+    ),
+  );
 
-  final AuthRepository authRepo = new AuthRepository();
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tikus Events',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Wrapper(authRepository: authRepo,),
-    );
-  }
+  runApp(Wrapper(authRepository: authRepository));
 }
 

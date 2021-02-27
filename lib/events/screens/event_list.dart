@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 
-class Authentication extends StatefulWidget {
+class EventList extends StatefulWidget {
   @override
-  _AuthenticationState createState() => _AuthenticationState();
+  _EventListState createState() => _EventListState();
 }
 
-class _AuthenticationState extends State<Authentication> {
+class _EventListState extends State<EventList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Authentication Page!'),
-        ],
+      body: ListView.builder(
+        itemCount: 12,
+        itemBuilder: (context, index){
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2.0),
+            child: ListTile(
+              title: Text('List Item: $index'),
+              subtitle: Text('event active'),
+              onTap: (){
+                print("Item $index Clicked!");
+              },
+            ),
+          );
+        },
       ),
     );
   }
