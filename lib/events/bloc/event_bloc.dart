@@ -13,8 +13,45 @@ class EventBloc extends Bloc<EventEvent, EventState>{
 
   @override
   Stream<EventState> mapEventToState(EventEvent event) async*{
-    if(event is EventInitialize){
-      yield EventInitialState();
+    if (event is EventInitialize) {
+      yield EventLoading();
+      try {
+
+        final events = await eventRepository.getEvents();
+        yield EventLoadSuccess(events);
+      } catch (_) {
+        yield EventOperationFailure();
+      }
+    }
+
+    if (event is EventCreate) {
+      try {
+        await eventRepository.createEvent(event.event);
+        final events = await eventRepository.getEvents();
+        yield EventLoadSuccess(events);
+      } catch (_) {
+        yield EventOperationFailure();
+      }
+    }
+
+    if (event is EventUpdate) {
+      try {
+        await eventRepository.updateEvent(event.event);
+        final events = await eventRepository.getEvents();
+        yield EventLoadSuccess(events);
+      } catch (_) {
+        yield EventOperationFailure();
+      }
+    }
+
+    if (event is EventDelete) {
+      try {
+        await eventRepository.deleteEvent(event.event.event_id);
+        final events = await eventRepository.getEvents();
+        yield EventLoadSuccess(events);
+      } catch (_) {
+        yield EventOperationFailure();
+      }
     }
   }
 }
