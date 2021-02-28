@@ -12,17 +12,3 @@ class UserAuth extends Equatable {
         @required this.userName,
         @required this.email,});
 
-  @override
-  List<Object> get props => [userId, userName, email];
-
-  factory UserAuth.fromJson(Map<String, dynamic> json) {
-    return UserAuth(
-      userId: json['user_id'],
-      userName: json['user_name'],
-      email: json['email'],
-    );
-  }
-
-  @override
-  String toString() => 'userAuth { user_id: $userId, user_name: $userName, email: $email }';
-}
