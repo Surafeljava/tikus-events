@@ -19,10 +19,12 @@ class RegisterDataProvider{
   }
 
   Future<List<dynamic>> createRegister(RegisterModel registerModel) async {
+    String tn = await getTokenFromSharedPreference();
     final response = await httpClient.post(
       '$_baseUrl/register/update',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'token': tn
       },
       body: jsonEncode(<String, dynamic>{
         'user_id': registerModel.user_id,
@@ -34,17 +36,24 @@ class RegisterDataProvider{
     );
 
     if (response.statusCode == 200) {
-      return [true, RegisterModel.fromJson(jsonDecode(response.body))];
+      Map<String, dynamic> myMap = json.decode(response.body);
+      if(myMap["status"]=="failed"){
+        return [false, myMap["message"]];
+      }else{
+        return [true, myMap["message"]];
+      }
     } else {
       return [false, 'Error registering to event'];
     }
   }
 
   Future<List<dynamic>> updateRegister(RegisterModel registerModel) async{
+    String tn = await getTokenFromSharedPreference();
     final response = await httpClient.put(
       '$_baseUrl/register/update',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'token': tn
       },
       body: jsonEncode(<String, dynamic>{
         'reg_id': registerModel.reg_id,
@@ -57,17 +66,24 @@ class RegisterDataProvider{
     );
 
     if (response.statusCode == 200) {
-      return [true, RegisterModel.fromJson(jsonDecode(response.body))];
+      Map<String, dynamic> myMap = json.decode(response.body);
+      if(myMap["status"]=="failed"){
+        return [false, myMap["message"]];
+      }else{
+        return [true, myMap["message"]];
+      }
     } else {
-      return [false, 'Error updating register'];
+      return [false, 'Error Updating register'];
     }
   }
 
   Future<List<dynamic>> deleteRegister(RegisterModel registerModel) async{
+    String tn = await getTokenFromSharedPreference();
     final response = await httpClient.delete(
       '$_baseUrl/register/delete?reg_id=${registerModel.reg_id}',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'token': tn
       },
     );
 
@@ -80,7 +96,7 @@ class RegisterDataProvider{
 
   Future<List<dynamic>> getRegisters() async {
     String tn = await getTokenFromSharedPreference();
-    final response = await httpClient.post(
+    final response = await httpClient.get(
       '$_baseUrl/register/all',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -98,10 +114,10 @@ class RegisterDataProvider{
         });
         return [true, registerModels];
       }else{
-        return [true, 'Error Loading registers'];
+        return [false, 'Error Loading registers'];
       }
     } else {
-      return [true, 'Error Loading registers'];
+      return [false, 'Error Loading registers'];
     }
   }
 
@@ -127,7 +143,7 @@ class RegisterDataProvider{
 
   }
 
-  Future<List<dynamic>> getSingleEvent() async{
+  Future<List<dynamic>> getSingleEvent(int eventId) async{
     String tn = await getTokenFromSharedPreference();
     final response = await httpClient.post(
       '$_baseUrl/event/one',
@@ -135,12 +151,19 @@ class RegisterDataProvider{
         'Content-Type': 'application/json; charset=UTF-8',
         'token': tn
       },
+      body: jsonEncode(<String, dynamic>{
+        'event_id': eventId,
+      },
+      ),
     );
 
     if (response.statusCode == 200) {
       Map<String, dynamic> myMap = json.decode(response.body);
-      var event = myMap["event"];
-      return [true, EventModel.fromJson(event)];
+      if(myMap["status"]=="failed"){
+        return [false, myMap["event"]];
+      }else{
+        return [true, EventModel.fromJson(myMap["event"])];
+      }
     } else {
       return [false, 'Failed to get single event'];
     }

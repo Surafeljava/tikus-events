@@ -1,3 +1,3 @@
 export 'event_add_update.dart';
-export 'event_detail.dart';
-export 'event_list.dart';
+export 'my_event_detail.dart';
+export 'my_events_list.dart';

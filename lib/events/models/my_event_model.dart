@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tikusevents/events/data_provider/event_data_provider.dart';
 
-class EventModel{
+class MyEventModel{
 
   final int eventId;
   final int userId;
@@ -15,7 +15,7 @@ class EventModel{
   final int allSeats;
   final int reservedSeats;
 
-  EventModel({
+  MyEventModel({
     this.eventId,
     @required this.userId,
     @required this.title,
@@ -29,24 +29,26 @@ class EventModel{
     @required this.reservedSeats
   });
 
-  factory EventModel.fromJson(dynamic json){
-    return EventModel(
-        eventId: json['event_id'],
-        userId: json['user_id'],
-        title: json['title'],
-        description: json['description'],
-        eventCreatedOn: json['event_created_on'],
-        eventBeginsOn: json['event_begins_on'],
-        eventEndsOn: json['event_ends_on'],
-        eventDeadline: json['event_deadline'],
-        eventPicture: '${EventDataProvider.baseUrl}/event/pic/get?pic=${json['event_picture']}',
-        allSeats: json['all_seats'],
-        reservedSeats: json['reserved_seats'],
+  factory MyEventModel.fromJson(dynamic json){
+    return MyEventModel(
+      eventId: json['event_id'],
+      userId: json['user_id'],
+      title: json['title'],
+      description: json['description'],
+      eventCreatedOn: json['event_created_on'],
+      eventBeginsOn: json['event_begins_on'],
+      eventEndsOn: json['event_ends_on'],
+      eventDeadline: json['event_deadline'],
+      eventPicture: '${EventDataProvider.baseUrl}/event/pic/get?pic=${json['event_picture']}',
+      allSeats: json['all_seats'],
+      reservedSeats: json['reserved_seats'],
     );
   }
 
   Map<String, dynamic> toJson() =>
       {
+        'event_id': eventId,
+        'user_id': userId,
         'title': title,
         'description': description,
         'event_created_on': eventCreatedOn,

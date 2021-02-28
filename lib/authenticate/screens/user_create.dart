@@ -286,25 +286,6 @@ class _UserCreateState extends State<UserCreate> {
                             ),
                           ),
 
-//                        SizedBox(height: 15.0,),
-//
-//                        state is RegistrationSuccess ? ElevatedButton.icon(
-//                          label: Text("Login Now"),
-//                          icon: Icon(Icons.arrow_back_ios, size: 16.0,),
-//                          style: ElevatedButton.styleFrom(
-//                            primary: Colors.pinkAccent,
-//                            padding: EdgeInsets.symmetric(horizontal: 20.0),
-//                            textStyle: TextStyle(
-//                              fontSize: 18,
-//                              fontWeight: FontWeight.w400,
-//                            ),
-//                          ),
-//                          onPressed: (){
-//                            BlocProvider.of<AuthBloc>(context, listen: false).add(AuthInitialize());
-//                            Navigator.of(context).pop();
-//                          },
-//                        ): Container(),
-
                           SizedBox(height: 15.0,),
 
                           SpringButton(

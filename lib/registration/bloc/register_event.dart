@@ -46,9 +46,9 @@ class RegisterDelete extends RegisterEvent {
   toString() => 'Course Deleted {course: $registerModel}';
 }
 
-class RegisterChoose extends RegisterEvent{
+class RegisterGetAll extends RegisterEvent{
 
-  const RegisterChoose();
+  const RegisterGetAll();
 
   @override
   List<Object> get props => [];

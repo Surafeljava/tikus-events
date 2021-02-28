@@ -14,28 +14,35 @@ class RegisterLoading extends RegisterState{}
 
 class RegisterInitialized extends RegisterState{}
 
-class RegisterGetSuccessful extends RegisterState{
-
-  final List<RegisterModel> registers;
-
-  RegisterGetSuccessful({this.registers});
-
-  @override
-  List<Object> get props => [registers];
-
-}
-
 class RegisterCreateSuccess extends RegisterState{
 
-  final RegisterModel registerModel;
+  final String registerMessage;
 
-  RegisterCreateSuccess({this.registerModel});
+  RegisterCreateSuccess({this.registerMessage});
 
   @override
-  List<Object> get props => [registerModel];
+  List<Object> get props => [registerMessage];
+}
+
+class RegisterGetSuccessful extends RegisterState{
+
+  final List<EventModel> events;
+  final List<RegisterModel> registers;
+
+  RegisterGetSuccessful({this.events, this.registers});
+
+  @override
+  List<Object> get props => [events, registers];
 
 }
 
+class AllRegisterGetFailure extends RegisterState{
+  final String message;
+  AllRegisterGetFailure({this.message});
+
+  @override
+  List<Object> get props => [message];
+}
 
 class EventGetSuccessful extends RegisterState{
 
@@ -67,4 +74,15 @@ class RegistrationToEventFailure extends RegisterState{
   @override
   List<Object> get props => [failedMessage];
 
+}
+
+class RegisterDeleteSuccess extends RegisterState{}
+
+class RegisterDeleteFailed extends RegisterState{
+  final String failedMessage;
+
+  RegisterDeleteFailed({this.failedMessage});
+
+  @override
+  List<Object> get props => [failedMessage];
 }

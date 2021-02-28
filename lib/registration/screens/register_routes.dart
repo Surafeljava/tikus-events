@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tikusevents/registration/models/event_model.dart';
-import 'package:tikusevents/registration/models/register_model.dart';
-import 'package:tikusevents/registration/screens/events_detail.dart';
-import 'package:tikusevents/registration/screens/events_list.dart';
+import 'package:tikusevents/events/data_provider/event_data_provider.dart';
+import 'package:tikusevents/events/event.dart';
+import 'package:tikusevents/events/repository/event_repository.dart';
+import 'package:tikusevents/registration/models/models.dart';
 import 'package:tikusevents/registration/screens/register_screens.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterRoutes{
   static Route generateRoute(RouteSettings settings){
 
     if(settings.name == "/"){
+      return MaterialPageRoute(builder: (context) => EventsList());
+    }
+
+    if(settings.name == EventsList.routeName){
       return MaterialPageRoute(builder: (context) => EventsList());
     }
 
@@ -23,8 +28,25 @@ class RegisterRoutes{
     }
 
     if(settings.name == RegisterDetail.routeName){
-      RegisterModel registerModel = settings.arguments;
-      return MaterialPageRoute(builder: (context) => RegisterDetail(registerModel: registerModel,));
+      List<dynamic> models = settings.arguments;
+      RegisterModel registerModel = models[0];
+      EventModel eventModel = models[1];
+      return MaterialPageRoute(builder: (context) => RegisterDetail(registerModel: registerModel, eventModel: eventModel,));
+    }
+
+    if(settings.name == RegisterAddUpdate.routeName){
+      RegisterArgument arg = settings.arguments;
+      return MaterialPageRoute(builder: (context) => RegisterAddUpdate(args: arg,));
+    }
+
+    if(settings.name == Event.routeName){
+      final EventRepository eventRepository = EventRepository(
+        eventDataProvider: EventDataProvider(
+          httpClient: http.Client(),
+        ),
+      );
+
+      return MaterialPageRoute(builder: (context) => Event(eventRepository: eventRepository));
     }
 
   }

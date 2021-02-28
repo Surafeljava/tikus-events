@@ -53,6 +53,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             }else if(state is PasswordForgotSuccess){
               final snackBar = SnackBar(content: Text("Password Changed!"));
               _scaffoldKey.currentState.showSnackBar(snackBar);
+              BlocProvider.of<AuthBloc>(context, listen: false).add(AuthInitialize());
             }
           },
           builder: (context, state){
@@ -107,7 +108,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           ),
                         ) : Container(),
 
-                        SpringButton(
+                        state is ForgotPasswordPage ? SpringButton(
                           SpringButtonType.OnlyScale,
                           Container(
                               decoration: BoxDecoration(
@@ -133,34 +134,143 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               });
                             }
                           },
-                        ),
-
-//                        state is ForgotPasswordPage ?
-//                        TextButton(
-//                          child: Text('Send Reset Code'),
-//                          onPressed: (){
-//                            String email = "surafelm27@gmail.com";
-//                            BlocProvider.of<AuthBloc>(context, listen: false).add(PasswordForgotEmail(email: email));
-//                          },
-//                        ):
-//                        Container(),
+                        ) : Container(),
 
 
-                        state is PasswordForgotEmailSent ?
-                        TextButton(
-                          child: Text('Change Password'),
-                          onPressed: (){
-                            String email = "surafelm27@gmail.com";
-                            String password = "654321";
-                            String resetCode = "979140";
-                            setState(() {
-                              emailLoading = false;
-                            });
-                            BlocProvider.of<AuthBloc>(context, listen: false).add(PasswordForgotChange(email: email, password: password, resetCode: resetCode));
+
+                        state is PasswordForgotEmailSent ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                          child: TextFormField(
+                            autofocus: false,
+                            validator: (val){
+                              if(val.isEmpty){
+                                return 'Empty Field';
+                              }else{
+                                return null;
+                              }
+                            },
+                            controller: resetCodeController,
+                            keyboardType: TextInputType.number,
+                            style: TextStyle(fontSize: 20.0, color: Colors.black, letterSpacing: 1.0,),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
+                              hintText: 'Reset Code',
+                              hintStyle: TextStyle(fontSize: 16.0, color: Colors.grey[900],),
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(color: Colors.transparent, width: 2.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(color: Colors.transparent, width: 2.0),
+                              ),
+                            ),
+                          ),
+                        ) : Container(),
+
+                        state is PasswordForgotEmailSent ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                          child: TextFormField(
+                            autofocus: false,
+                            validator: (val){
+                              if(val.isEmpty){
+                                return 'Empty Field';
+                              }else{
+                                return null;
+                              }
+                            },
+                            controller: passwordController,
+                            keyboardType: TextInputType.text,
+                            obscureText: true,
+                            style: TextStyle(fontSize: 20.0, color: Colors.black, letterSpacing: 1.0,),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
+                              hintText: 'Password',
+                              hintStyle: TextStyle(fontSize: 16.0, color: Colors.grey[900],),
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(color: Colors.transparent, width: 2.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(color: Colors.transparent, width: 2.0),
+                              ),
+                            ),
+                          ),
+                        ) : Container(),
+
+                        state is PasswordForgotEmailSent ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                          child: TextFormField(
+                            autofocus: false,
+                            validator: (val){
+                              if(val.isEmpty){
+                                return 'Empty Field';
+                              }else if(passwordController.text != val){
+                                return "Password doesn't match!";
+                              }else{
+                                return null;
+                              }
+                            },
+                            controller: confirmPasswordController,
+                            keyboardType: TextInputType.text,
+                            obscureText: true,
+                            style: TextStyle(fontSize: 20.0, color: Colors.black, letterSpacing: 1.0,),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
+                              hintText: 'Confirm Password',
+                              hintStyle: TextStyle(fontSize: 16.0, color: Colors.grey[900],),
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(color: Colors.transparent, width: 2.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(color: Colors.transparent, width: 2.0),
+                              ),
+                            ),
+                          ),
+                        ) : Container(),
+
+
+                        state is PasswordForgotEmailSent ? SpringButton(
+                          SpringButtonType.OnlyScale,
+                          Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey[800],
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                              child: Center(
+                                child: Text('Send Reset Code', style: TextStyle(fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.w400, letterSpacing: 1.0),),
+                              )
+                          ),
+                          scaleCoefficient: 0.9,
+                          useCache: false,
+                          onTap: (){
+                            if(_formKey.currentState.validate()){
+                              String email = emailController.text;
+                              String password = passwordController.text;
+                              String resetCode = resetCodeController.text;
+                              setState(() {
+                                emailLoading = false;
+                              });
+                              BlocProvider.of<AuthBloc>(context, listen: false).add(PasswordForgotChange(email: email, password: password, resetCode: resetCode));
+                            }else{
+                              setState(() {
+                                _autoValidate = true;
+                              });
+                            }
                           },
-                        ):
-                        Container(),
-
+                        ) : Container(),
 
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),

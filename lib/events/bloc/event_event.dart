@@ -1,5 +1,7 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
-import 'package:tikusevents/registration/models/event_model.dart';
+import 'package:tikusevents/events/models/my_event_model.dart';
 
 abstract class EventEvent extends Equatable {
   const EventEvent();
@@ -14,12 +16,13 @@ class EventInitialize extends EventEvent{
 
 
 class EventCreate extends EventEvent {
-  final EventModel event;
+  final MyEventModel event;
+  final File image;
 
-  const EventCreate(this.event);
+  const EventCreate(this.event, this.image);
 
   @override
-  List<Object> get props => [event];
+  List<Object> get props => [event, image];
 
   @override
   String toString() => 'Event Created {event: $event}';
@@ -27,7 +30,7 @@ class EventCreate extends EventEvent {
 
 
 class EventUpdate extends EventEvent {
-  final EventModel event;
+  final MyEventModel event;
 
   const EventUpdate(this.event);
 
@@ -40,7 +43,7 @@ class EventUpdate extends EventEvent {
 
 
 class EventDelete extends EventEvent {
-  final EventModel event;
+  final MyEventModel event;
 
   const EventDelete(this.event);
 

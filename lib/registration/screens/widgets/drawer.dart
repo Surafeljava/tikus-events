@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tikusevents/authenticate/bloc/auth_bloc.dart';
 import 'package:tikusevents/authenticate/bloc/auth_event.dart';
+import 'package:tikusevents/authenticate/bloc/auth_state.dart';
 import 'package:tikusevents/authenticate/models/auth_model.dart';
+import 'package:tikusevents/events/event.dart';
 
 class MyDrawer extends StatelessWidget {
 
@@ -58,10 +60,27 @@ class MyDrawer extends StatelessWidget {
           title: Text('MyEvents', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400, letterSpacing: 1.0, color: Colors.grey[800 ]),),
           onTap: (){
             //TODO: change this
-            Navigator.of(context).pushNamed('/');
+            Navigator.of(context).pushNamed(Event.routeName);
           },
         ),
 
+        BlocBuilder<AuthBloc, AuthenticateState>(
+          builder: (context, state) {
+            if(state is Authenticated){
+              AuthModel user = state.props[0];
+              return user.admin ? ListTile(
+                leading: Icon(Icons.dashboard, color: Colors.grey[800],),
+                title: Text('Admin Dashboard', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400, letterSpacing: 1.0, color: Colors.grey[800 ]),),
+                onTap: (){
+                  //TODO: change this
+                  Navigator.of(context).pushNamed('/');
+                },
+              ) : Container();
+            }else{
+              return Container();
+            }
+          }
+        ),
 
         Spacer(),
 
