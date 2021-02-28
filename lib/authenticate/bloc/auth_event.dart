@@ -53,12 +53,12 @@ class AuthLogout extends AuthenticateEvent{
   String toString() => 'Logged Out!';
 }
 
-class Register extends AuthenticateEvent{
+class RegisterUser extends AuthenticateEvent{
 
   final File image;
   final AuthModel authModel;
 
-  Register({this.image, this.authModel});
+  RegisterUser({this.image, this.authModel});
 
   @override
   List<Object> get props => [image, authModel];

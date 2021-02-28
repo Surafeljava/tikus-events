@@ -16,7 +16,7 @@ class AuthInitial extends AuthenticateState{}
 
 class Authenticated extends AuthenticateState{
 
-  final List<dynamic> result;
+  final AuthModel result;
 
   Authenticated([this.result]);
 

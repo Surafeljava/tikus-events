@@ -3,6 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tikusevents/authenticate/models/auth_model.dart';
 import 'package:tikusevents/authenticate/screens/auth_menu.dart';
 import 'package:tikusevents/authenticate/screens/auth_screens.dart';
+import 'package:tikusevents/registration/data_provider/register_data_provider.dart';
+import 'package:tikusevents/registration/register.dart';
+import 'package:tikusevents/registration/repository/register_repository.dart';
+import 'package:http/http.dart' as http;
 
 import 'bloc/bloc.dart';
 
@@ -12,6 +16,9 @@ class Authenticate extends StatefulWidget {
 }
 
 class _AuthenticateState extends State<Authenticate> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,22 +37,12 @@ class _AuthenticateState extends State<Authenticate> {
           }
 
           if(state is Authenticated){
-            AuthModel user = state.result[1];
-            return Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(user.profileUrl),
-                )
-              ),
-              child: Center(
-                child: TextButton(
-                  child: Text("${user.userName} Logout"),
-                  onPressed: (){
-                    BlocProvider.of<AuthBloc>(context, listen: false).add(AuthLogout());
-                  },
-                ),
+            final RegisterRepository registerRepository = RegisterRepository(
+              dataProvider: RegisterDataProvider(
+                httpClient: http.Client(),
               ),
             );
+            return Register(registerRepository: registerRepository,);
           }
 
           else{

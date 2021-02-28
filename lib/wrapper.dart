@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tikusevents/app_route.dart';
 
@@ -17,14 +18,17 @@ class Wrapper extends StatelessWidget {
       value: this.authRepository,
       child: BlocProvider(
         create: (context) => AuthBloc(authRepository: this.authRepository)..add(AuthLoad()),
-        child: MaterialApp(
-          title: 'Tikus Events',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
+        child: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.light,
+          child: MaterialApp(
+            title: 'Tikus Events',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            onGenerateRoute: AppRoute.generateRoute,
           ),
-          onGenerateRoute: AppRoute.generateRoute,
         ),
       ),
     );

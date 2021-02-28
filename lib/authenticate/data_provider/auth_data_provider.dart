@@ -138,7 +138,6 @@ class AuthDataProvider{
       print("UserInfo: ${response.body}");
 
       if (response.statusCode == 200) {
-//        await addTokenToSharedPreference(jsonDecode(response.body)["user"]);
         Map<String, dynamic> myMap = json.decode(response.body);
         var user = myMap["user"];
         AuthModel userModel = AuthModel(userName: user['user_name'], email: user['email'], profileUrl: '$_baseUrl/user/pic/get?pic=${user['profile_url']}', admin: user['admin'], createdOn: user['created_on']);
@@ -147,7 +146,6 @@ class AuthDataProvider{
         return [false, "Failed to get User Info."];
       }
     }catch(e){
-      print("****///****: $e");
       return [false, "Failed to get User Info."];
     }
   }

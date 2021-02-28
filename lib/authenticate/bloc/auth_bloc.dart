@@ -16,12 +16,13 @@ class AuthBloc extends Bloc<AuthenticateEvent, AuthenticateState>{
   Stream<AuthenticateState> mapEventToState(AuthenticateEvent event) async*{
     if(event is AuthLoad){
       yield AuthLoading();
+      await Future.delayed(Duration(seconds: 2));
       try{
         bool result = await authRepository.loggedInCheck();
         if(result){
           List<dynamic> userInfo = await authRepository.getUserInfo();
           if(userInfo[0]){
-            yield Authenticated(userInfo);
+            yield Authenticated(userInfo[1]);
           }else{
             yield AuthFailed(userInfo[1]);
           }
@@ -48,7 +49,7 @@ class AuthBloc extends Bloc<AuthenticateEvent, AuthenticateState>{
         if(result[0]){
           List<dynamic> userInfo = await authRepository.getUserInfo();
           if(userInfo[0]){
-            yield Authenticated(userInfo);
+            yield Authenticated(userInfo[1]);
           }else{
             yield LoggingInFailed(message: userInfo[1]);
           }
@@ -72,7 +73,7 @@ class AuthBloc extends Bloc<AuthenticateEvent, AuthenticateState>{
 
     }
 
-    if(event is Register){
+    if(event is RegisterUser){
       //Do This
       yield RegistrationInProgress();
       try{

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class RegisterList extends StatefulWidget {
+
+  static final routeName = '/register/register_list';
+
   @override
   _RegisterListState createState() => _RegisterListState();
 }

@@ -8,7 +8,7 @@ class RegisterModel{
   final String registered_on;
   final int reserved_seats;
 
-  RegisterModel({@required this.reg_id, @required this.user_id, @required this.event_id, @required this.registered_on, @required this.reserved_seats});
+  RegisterModel({this.reg_id, @required this.user_id, @required this.event_id, @required this.registered_on, @required this.reserved_seats});
 
   factory RegisterModel.fromJson(dynamic json){
     return RegisterModel(
