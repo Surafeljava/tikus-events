@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:meta/meta.dart';
-import 'package:tikus_event/events/models/event.dart';
+import 'tikus-events/lib/events/models/event.dart';
 import 'package:http/http.dart' as http;
 
 class EventDataProvider {
