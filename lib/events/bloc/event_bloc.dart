@@ -26,7 +26,7 @@ class EventBloc extends Bloc<EventEvent, EventState>{
 
     if (event is EventCreate) {
       try {
-        await eventRepository.createEvent(event.event);
+        await Future.delayed(Duration(seconds: 4));
         final events = await eventRepository.getEvents();
         yield EventLoadSuccess(events);
       } catch (_) {
@@ -36,7 +36,7 @@ class EventBloc extends Bloc<EventEvent, EventState>{
 
     if (event is EventUpdate) {
       try {
-        await eventRepository.updateEvent(event.event);
+        await Future.delayed(Duration(seconds: 4));
         final events = await eventRepository.getEvents();
         yield EventLoadSuccess(events);
       } catch (_) {
@@ -46,7 +46,7 @@ class EventBloc extends Bloc<EventEvent, EventState>{
 
     if (event is EventDelete) {
       try {
-        await eventRepository.deleteEvent(event.event.event_id);
+        await Future.delayed(Duration(seconds: 4));
         final events = await eventRepository.getEvents();
         yield EventLoadSuccess(events);
       } catch (_) {

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:tikusevents/registration/models/event_model.dart';
 
 class EventState extends Equatable {
   const EventState();
@@ -13,7 +14,7 @@ class EventInitialState extends EventState{}
 
 
 class EventLoadSuccess extends EventState {
-  final List<Event> events;
+  final List<EventModel> events;
 
   EventLoadSuccess([this.events = const []]);
 

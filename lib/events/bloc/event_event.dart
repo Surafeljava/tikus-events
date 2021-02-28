@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:tikusevents/registration/models/event_model.dart';
 
 abstract class EventEvent extends Equatable {
   const EventEvent();
@@ -13,7 +14,7 @@ class EventInitialize extends EventEvent{
 
 
 class EventCreate extends EventEvent {
-  final Event event;
+  final EventModel event;
 
   const EventCreate(this.event);
 
@@ -26,7 +27,7 @@ class EventCreate extends EventEvent {
 
 
 class EventUpdate extends EventEvent {
-  final Event event;
+  final EventModel event;
 
   const EventUpdate(this.event);
 
@@ -39,7 +40,7 @@ class EventUpdate extends EventEvent {
 
 
 class EventDelete extends EventEvent {
-  final Event event;
+  final EventModel event;
 
   const EventDelete(this.event);
 
