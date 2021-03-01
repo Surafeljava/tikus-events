@@ -20,6 +20,13 @@ class _AdminDashBoardState extends State<AdminDashBoard> {
         elevation: 0.0,
         backgroundColor: Colors.grey[100],
         title: Text('Admin*'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: (){
+            BlocProvider.of<RegisterBloc>(context, listen: false).add(RegisterInitialize());
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       body: BlocConsumer<RegisterBloc, RegisterState>(
         listener: (context, state){
