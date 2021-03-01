@@ -197,4 +197,28 @@ class RegisterDataProvider{
   }
 
 
+  Future<List<dynamic>> getAdminDashboardData() async {
+    String tn = await getTokenFromSharedPreference();
+    final response = await httpClient.get(
+      '$_baseUrl/admin/get',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': tn
+      },
+    );
+
+    if(response.statusCode == 200){
+      List<int> adminData = [];
+      Map<String, dynamic> myMap = json.decode(response.body);
+      List<dynamic> events = myMap["data"];
+      events.forEach((event) {
+        adminData.add(event);
+      });
+      return [true, adminData];
+    }else{
+      return [false, 'Error getting events'];
+    }
+  }
+
+
 }

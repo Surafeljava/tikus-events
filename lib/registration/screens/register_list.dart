@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:spring_button/spring_button.dart';
 import 'package:tikusevents/registration/bloc/bloc.dart';
 import 'package:tikusevents/registration/models/models.dart';
 import 'package:tikusevents/registration/screens/register_add_update.dart';
@@ -62,9 +63,72 @@ class _RegisterListState extends State<RegisterList> {
                   return ListView.builder(
                     itemCount: events.length,
                     itemBuilder: (context, index){
-                      return ListTile(
-                        title: Text(events[index].title),
-                        subtitle: Text(events[index].description),
+
+                      return SpringButton(
+                        SpringButtonType.OnlyScale,
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.width*0.6,
+                          padding: EdgeInsets.all(8.0),
+                          child: Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage(events[index].eventPicture),
+                                  fit: BoxFit.cover,
+                                ),
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              alignment: Alignment.bottomCenter,
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20.0),
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Colors.transparent,
+                                            Colors.black,
+                                          ],
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                        )
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(events[index].title, style: TextStyle(color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.w700),),
+                                            Text(events[index].description, style: TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w300),),
+                                          ],
+                                        ),
+
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Text((registers[index].reserved_seats).toString(), style: TextStyle(color: Colors.white, fontSize: 36.0, fontWeight: FontWeight.w700),),
+                                              Text('Seats Reserved', style: TextStyle(color: Colors.white, fontSize: 15.0, fontWeight: FontWeight.w300),),
+                                            ],
+                                          ),
+                                        )
+
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )
+                          ),
+                        ),
+
+                        scaleCoefficient: 0.95,
+                        useCache: false,
                         onTap: (){
                           Navigator.of(context).pushNamed(RegisterDetail.routeName, arguments: [registers[index], events[index]]);
                         },

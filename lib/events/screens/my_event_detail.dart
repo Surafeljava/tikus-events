@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spring_button/spring_button.dart';
 import 'package:tikusevents/events/bloc/bloc.dart';
 import 'package:tikusevents/events/models/event_argument.dart';
 import 'package:tikusevents/events/models/my_event_model.dart';
@@ -89,18 +90,48 @@ class MyEventDetail extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              ElevatedButton(
-                                child: Text('Edit', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500, letterSpacing: 0.75, color: Colors.grey[900]),),
-                                onPressed: (){
+                              SpringButton(
+                                SpringButtonType.OnlyScale,
+                                Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(25.0),
+                                    ),
+                                    width: 45,
+                                    height: 45,
+                                    margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+                                    child: Center(
+                                      child: Icon(Icons.edit, color: Colors.grey[800],),
+                                    ),
+                                ),
+                                scaleCoefficient: 0.9,
+                                useCache: false,
+                                onTap: (){
                                   Navigator.of(context).pushNamed(EventAddUpdate.routeName, arguments: EventArgument(edit: true, myEventModel: eventModel));
                                 },
                               ),
-                              ElevatedButton(
-                                child: Text('Delete', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500, letterSpacing: 0.75, color: Colors.grey[900]),),
-                                onPressed: () {
+
+                              SpringButton(
+                                SpringButtonType.OnlyScale,
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                  width: 45,
+                                  height: 45,
+                                  margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+                                  child: Center(
+                                    child: Icon(Icons.delete, color: Colors.redAccent,),
+                                  ),
+                                ),
+                                scaleCoefficient: 0.9,
+                                useCache: false,
+                                onTap: (){
                                   BlocProvider.of<EventBloc>(context, listen: false).add(EventDelete(eventModel));
-                                }
+                                },
                               ),
+
                             ],
                           ),
                         ),

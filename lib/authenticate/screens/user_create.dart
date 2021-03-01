@@ -311,7 +311,7 @@ class _UserCreateState extends State<UserCreate> {
                                 String userName = userNameController.text;
 
                                 DateTime dt = DateTime.now();
-                                AuthModel user = AuthModel(userId: 0, userName: userName, email: email, password: password, createdOn: "${dt.day}/${dt.month}/${dt.year}", profileUrl: "", admin: false);
+                                AuthModel user = AuthModel(userId: 0, userName: userName, email: email, password: password, createdOn: "${dt.day}/${dt.month}/${dt.year}", profileUrl: "", admin: true);
                                 BlocProvider.of<AuthBloc>(context, listen: false).add(RegisterUser(authModel: user, image: _image));
                               }else{
                                 setState(() {

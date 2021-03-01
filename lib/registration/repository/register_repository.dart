@@ -49,4 +49,8 @@ class RegisterRepository{
     return await dataProvider.getSingleEvent(eventId);
   }
 
+  Future<List<dynamic>> getAdminData() async {
+    return await dataProvider.getAdminDashboardData();
+  }
+
 }

@@ -54,3 +54,8 @@ class RegisterGetAll extends RegisterEvent{
   List<Object> get props => [];
 
 }
+
+class AdminDashBoardGet extends RegisterEvent{
+  @override
+  List<Object> get props => [];
+}

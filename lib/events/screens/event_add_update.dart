@@ -28,7 +28,7 @@ class _EventAddUpdateState extends State<EventAddUpdate> {
   final picker = ImagePicker();
   bool imageGetClicked = false;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _addscaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
 
@@ -117,7 +117,7 @@ class _EventAddUpdateState extends State<EventAddUpdate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+      key: _addscaffoldKey,
       appBar: AppBar(
         title: Text(widget.args.edit ? 'Editing' : 'Creating', style: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.w400),),
         backgroundColor: Colors.white,
@@ -128,8 +128,7 @@ class _EventAddUpdateState extends State<EventAddUpdate> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: (){
-//            BlocProvider.of<RegisterBloc>(context, listen: false).add(RegisterInitialize());
-//            Navigator.of(context).pushNamedAndRemoveUntil(EventsList.routeName, (route) => false);
+            Navigator.of(context).pop();
           },
         ),
       ),
@@ -139,15 +138,20 @@ class _EventAddUpdateState extends State<EventAddUpdate> {
         listener: (context, state){
           if(state is EventLoading){
             final snackBar = SnackBar(content: Text("Loading..."), duration: Duration(milliseconds: 500),);
-            _scaffoldKey.currentState.showSnackBar(snackBar);
+            _addscaffoldKey.currentState.showSnackBar(snackBar);
           }else if(state is EventCreateSuccess){
             final snackBar = SnackBar(content: Text('Success!'), duration: Duration(milliseconds: 500),);
-            _scaffoldKey.currentState.showSnackBar(snackBar);
+            _addscaffoldKey.currentState.showSnackBar(snackBar);
+            BlocProvider.of<EventBloc>(context, listen: false).add(EventInitialize());
+            Navigator.of(context).pop();
+          }else if(state is EventUpdateSuccess){
+            final snackBar = SnackBar(content: Text('Success!'), duration: Duration(milliseconds: 500),);
+            _addscaffoldKey.currentState.showSnackBar(snackBar);
             BlocProvider.of<EventBloc>(context, listen: false).add(EventInitialize());
             Navigator.of(context).pop();
           }else if(state is EventOperationFailure){
             final snackBar = SnackBar(content: Text(state.failedMessage), duration: Duration(milliseconds: 1000),);
-            _scaffoldKey.currentState.showSnackBar(snackBar);
+            _addscaffoldKey.currentState.showSnackBar(snackBar);
           }
         },
         builder: (context, state){
@@ -172,7 +176,7 @@ class _EventAddUpdateState extends State<EventAddUpdate> {
                             borderRadius: BorderRadius.only(bottomRight: Radius.circular(20.0), bottomLeft: Radius.circular(10.0)),
                             child: Container(
                               width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.width*0.45,
+                              height: MediaQuery.of(context).size.width*0.65,
                               decoration: _image != null ? BoxDecoration(
                                 color: Colors.grey[200],
                                 image: DecorationImage(
@@ -368,32 +372,42 @@ class _EventAddUpdateState extends State<EventAddUpdate> {
                               height: 50,
                               margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                               child: Center(
-                                child: Text('Create', style: TextStyle(fontSize: 22.0, color: Colors.white, fontWeight: FontWeight.w400, letterSpacing: 1.5),),
+                                child: Text(widget.args.edit ? 'Update' : 'Create', style: TextStyle(fontSize: 22.0, color: Colors.white, fontWeight: FontWeight.w400, letterSpacing: 1.5),),
                               )
                           ),
                           scaleCoefficient: 0.9,
                           useCache: false,
                           onTap: (){
-                            if(_formKey.currentState.validate() && _image!=null){
+                            if(_formKey.currentState.validate()){
                               String title = titleController.text;
                               String desc = descController.text;
                               String seats = seatsController.text;
 
                               DateTime dt = DateTime.now();
-                              MyEventModel event = MyEventModel(
+                              MyEventModel event = widget.args.edit ? MyEventModel(
                                 userId: 0,
+                                eventId: widget.args.myEventModel.eventId,
                                 title: title,
                                 description: desc,
-                                eventCreatedOn: "${dt.day}/${dt.month}/${dt.year}",
+                                eventCreatedOn: widget.args.myEventModel.eventCreatedOn,
                                 eventBeginsOn: "${begins.day}/${begins.month}/${begins.year}",
                                 eventEndsOn: "${ends.day}/${ends.month}/${ends.year}",
                                 eventDeadline: "${deadLine.day}/${deadLine.month}/${deadLine.year}",
-                                eventPicture: "",
+                                eventPicture: widget.args.myEventModel.eventPicture,
                                 allSeats: int.parse(seats),
-                                reservedSeats: 0
+                                reservedSeats: widget.args.myEventModel.reservedSeats
+                              ) : MyEventModel(
+                                  userId: 0,
+                                  title: title,
+                                  description: desc,
+                                  eventCreatedOn: "${dt.day}/${dt.month}/${dt.year}",
+                                  eventBeginsOn: "${begins.day}/${begins.month}/${begins.year}",
+                                  eventEndsOn: "${ends.day}/${ends.month}/${ends.year}",
+                                  eventDeadline: "${deadLine.day}/${deadLine.month}/${deadLine.year}",
+                                  eventPicture: "",
+                                  allSeats: int.parse(seats),
+                                  reservedSeats: 0
                               );
-
-                              //Todo: send the data here
 
                               if(widget.args.edit){
                                 BlocProvider.of<EventBloc>(context, listen: false).add(EventUpdate(event));

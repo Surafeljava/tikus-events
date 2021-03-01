@@ -5,6 +5,8 @@ import 'package:tikusevents/authenticate/bloc/auth_event.dart';
 import 'package:tikusevents/authenticate/bloc/auth_state.dart';
 import 'package:tikusevents/authenticate/models/auth_model.dart';
 import 'package:tikusevents/events/event.dart';
+import 'package:tikusevents/registration/bloc/bloc.dart';
+import 'package:tikusevents/registration/screens/admin_dash_board.dart';
 
 class MyDrawer extends StatelessWidget {
 
@@ -72,8 +74,8 @@ class MyDrawer extends StatelessWidget {
                 leading: Icon(Icons.dashboard, color: Colors.grey[800],),
                 title: Text('Admin Dashboard', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400, letterSpacing: 1.0, color: Colors.grey[800 ]),),
                 onTap: (){
-                  //TODO: change this
-                  Navigator.of(context).pushNamed('/');
+                  BlocProvider.of<RegisterBloc>(context, listen: false).add(AdminDashBoardGet());
+                  Navigator.of(context).pushNamed(AdminDashBoard.routeName);
                 },
               ) : Container();
             }else{

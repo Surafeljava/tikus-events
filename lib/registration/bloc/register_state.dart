@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:tikusevents/registration/bloc/bloc.dart';
+import 'package:tikusevents/registration/models/dashboard_model.dart';
 import 'package:tikusevents/registration/models/event_model.dart';
 import 'package:tikusevents/registration/models/register_model.dart';
 
@@ -82,6 +84,24 @@ class RegisterDeleteFailed extends RegisterState{
   final String failedMessage;
 
   RegisterDeleteFailed({this.failedMessage});
+
+  @override
+  List<Object> get props => [failedMessage];
+}
+
+class AdminDashBoardGetSuccess extends RegisterState{
+  final DashBoardModel dashBoardModel;
+
+  AdminDashBoardGetSuccess({this.dashBoardModel});
+
+  @override
+  List<Object> get props => [dashBoardModel];
+}
+
+class AdminDashBoardGetFailed extends RegisterState{
+  final String failedMessage;
+
+  AdminDashBoardGetFailed({this.failedMessage});
 
   @override
   List<Object> get props => [failedMessage];

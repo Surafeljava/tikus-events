@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:tikusevents/registration/bloc/bloc.dart';
+import 'package:tikusevents/registration/models/dashboard_model.dart';
 import 'package:tikusevents/registration/models/event_model.dart';
 import 'package:tikusevents/registration/models/register_model.dart';
 import 'package:tikusevents/registration/repository/register_repository.dart';
@@ -73,6 +74,20 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState>{
         yield RegisterDeleteSuccess();
       }else{
         yield RegisterDeleteFailed(failedMessage: result[1]);
+      }
+    }
+
+
+    if(event is AdminDashBoardGet){
+      yield RegisterLoading();
+      List<dynamic> result = await registerRepository.getAdminData();
+      if(result[0]){
+        List<int> info = result[1];
+        yield AdminDashBoardGetSuccess(
+          dashBoardModel: DashBoardModel(events: info[0], registrations: info[1], users: info[2])
+        );
+      }else{
+        yield AdminDashBoardGetFailed(failedMessage: result[1]);
       }
     }
 

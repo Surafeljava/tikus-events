@@ -114,6 +114,7 @@ class EventDataProvider {
         'token': tn
       },
       body: jsonEncode(<String, dynamic>{
+        'event_id': event.eventId,
         'title': event.title,
         'description': event.description,
         'event_created_on': event.eventCreatedOn,

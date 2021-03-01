@@ -24,7 +24,7 @@ class EventsList extends StatelessWidget {
         key: _scaffoldKey,
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.notifications, color: Colors.white,),
-          backgroundColor: Colors.grey[800],
+          backgroundColor: Colors.grey[900],
           onPressed: (){
             BlocProvider.of<RegisterBloc>(context, listen: false).add(RegisterGetAll());
             Navigator.of(context).pushNamed(RegisterList.routeName);
@@ -35,6 +35,14 @@ class EventsList extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: Colors.grey[100],
           title: Text('Home'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.refresh, color: Colors.grey[800],),
+              onPressed: (){
+                BlocProvider.of<RegisterBloc>(context, listen: false).add(RegisterInitialize());
+              },
+            ),
+          ],
         ),
         drawer: Drawer(
           child: BlocBuilder<AuthBloc, AuthenticateState>(
