@@ -64,7 +64,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 children: [
                   Form(
                     key: _formKey,
-                    autovalidate: _autoValidate,
+                    // autovalidate: _autoValidate,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,

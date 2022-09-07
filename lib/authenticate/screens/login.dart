@@ -53,8 +53,8 @@ class _LoginState extends State<Login> {
                  Container(
                    width: MediaQuery.of(context).size.width,
                    child: Form(
+                  
                      key: _formKey,
-                     autovalidate: _autoValidate,
                      child: Column(
                        mainAxisAlignment: MainAxisAlignment.center,
                        crossAxisAlignment: CrossAxisAlignment.center,

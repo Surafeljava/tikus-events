@@ -133,7 +133,6 @@ class _EventAddUpdateState extends State<EventAddUpdate> {
         ),
       ),
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
       body: BlocConsumer<EventBloc, EventState>(
         listener: (context, state){
           if(state is EventLoading){
@@ -162,7 +161,6 @@ class _EventAddUpdateState extends State<EventAddUpdate> {
               children: [
                 Form(
                   key: _formKey,
-                  autovalidate: _autoValidate,
                   child: Container(
                     width: wd,
                     height: ht,
