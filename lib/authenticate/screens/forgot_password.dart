@@ -21,7 +21,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   TextEditingController confirmPasswordController = new TextEditingController();
   TextEditingController resetCodeController = new TextEditingController();
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
 

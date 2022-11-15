@@ -21,7 +21,7 @@ class RegisterDetail extends StatefulWidget {
 }
 
 class _RegisterDetailState extends State<RegisterDetail> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+   final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
   int choice = -1;
 

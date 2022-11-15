@@ -26,7 +26,7 @@ class _RegisterAddUpdateState extends State<RegisterAddUpdate> {
   RegisterModel rModel;
   EventModel eModel;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
   void initState() {

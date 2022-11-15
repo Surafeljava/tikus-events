@@ -28,7 +28,7 @@ class _AuthenticateState extends State<Authenticate> {
             return SplashPage();
           }
 
-          if(state is AuthLogin || state is LoggingInProgress || state is LoggingInFailed || state is LoggingInPage){
+          if(state is AuthLoading || state is LoggingInProgress || state is LoggingInFailed || state is LoggingInPage){
             return Login();
           }
 
